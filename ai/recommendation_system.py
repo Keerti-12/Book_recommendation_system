@@ -1,4 +1,4 @@
-import os
+
 import streamlit as st
 
 @st.cache_resource
@@ -33,7 +33,9 @@ def load_system(books):
 
     dimension = len(embeddings.embed_query("test"))
 
-    pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
+    # Use Streamlit secrets for Pinecone API key
+    pinecone_api_key = st.secrets["PINECONE_API_KEY"]
+    pc = Pinecone(api_key=pinecone_api_key)
     index_name = "book-recommendation"
 
     if not pc.has_index(index_name):

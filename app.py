@@ -1,13 +1,10 @@
-import streamlit as st
-from dotenv import load_dotenv
 
+import streamlit as st
 from utils.load_data import load_books
 from utils.book_api import get_book_data
 from ai.recommendation_system import load_system
 from ui.styles import load_css
 from ui.components import render_book_card
-
-load_dotenv()
 
 st.set_page_config(
     page_title="AI Book Recommender",
