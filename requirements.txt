@@ -1,0 +1,14 @@
+streamlit
+pandas
+requests
+python-dotenv
+langchain
+langchain-core
+langchain-huggingface
+langchain-pinecone
+langchain-groq
+pinecone
+sentence-transformers
+langchain_text_splitters
+pinecone-client==3.2.2
+langchain_classic
