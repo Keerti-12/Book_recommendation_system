@@ -33,7 +33,7 @@ def load_system(books):
 
     dimension = len(embeddings.embed_query("test"))
 
-    # Use Streamlit secrets for Pinecone API key
+    # Use Pinecone v3+ SDK style
     pinecone_api_key = st.secrets["PINECONE_API_KEY"]
     pc = Pinecone(api_key=pinecone_api_key)
     index_name = "book-recommendation"
