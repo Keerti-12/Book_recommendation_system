@@ -7,8 +7,7 @@ langchain-core
 langchain-huggingface
 langchain-pinecone
 langchain-groq
-pinecone
+pinecone-client==2.2.4
 sentence-transformers
 langchain_text_splitters
-pinecone-client==3.2.2
 langchain_classic
