@@ -6,7 +6,7 @@ def load_system(books):
     from langchain_core.documents import Document
     from langchain_text_splitters import RecursiveCharacterTextSplitter
     from langchain_huggingface import HuggingFaceEmbeddings
-    import pinecone
+    from pinecone import Pinecone, ServerlessSpec
     from langchain_pinecone import PineconeVectorStore
     from langchain_groq import ChatGroq
     from langchain_core.prompts import ChatPromptTemplate
@@ -33,20 +33,20 @@ def load_system(books):
 
     dimension = len(embeddings.embed_query("test"))
 
-    # Use Pinecone classic SDK (v2.x)
+    # Use Pinecone v3+ SDK
     pinecone_api_key = st.secrets["PINECONE_API_KEY"]
-    pinecone_env = "us-east-1-aws"  # classic environment string for us-east-1 on AWS
-    pinecone.init(api_key=pinecone_api_key, environment=pinecone_env)
+    pc = Pinecone(api_key=pinecone_api_key)
     index_name = "book-recommendation"
 
-    if index_name not in pinecone.list_indexes():
-        pinecone.create_index(
+    if not pc.has_index(index_name):
+        pc.create_index(
             name=index_name,
             dimension=dimension,
-            metric="cosine"
+            metric="cosine",
+            spec=ServerlessSpec(cloud="aws", region="us-east-1")
         )
 
-    index = pinecone.Index(index_name)
+    index = pc.Index(index_name)
     vector_store = PineconeVectorStore(index=index, embedding=embeddings)
 
     stats = index.describe_index_stats()
